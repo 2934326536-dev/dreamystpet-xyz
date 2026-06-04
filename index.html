@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Dreamyst — 每一只小狗都值得被记住。分享你与它的故事。">
+<title>Dreamyst | 小狗的故事</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Noto+Serif+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{
+  font-family:'Noto Serif SC','Playfair Display',Georgia,serif;
+  color:#3D2C2C;background:#FAF7F2;
+  line-height:1.8;-webkit-font-smoothing:antialiased;overflow-x:hidden;
+}
+
+/* ===== Nav ===== */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  padding:1.4rem 3rem;
+  display:flex;justify-content:space-between;align-items:center;
+  transition:all .45s cubic-bezier(.25,.1,.25,1);background:transparent;
+}
+nav.scrolled{
+  background:rgba(250,247,242,.92);backdrop-filter:blur(16px);
+  box-shadow:0 1px 0 rgba(61,44,44,.05);padding:.7rem 3rem;
+}
+nav.scrolled .nav-brand{font-size:1.1rem;letter-spacing:.1em}
+.nav-brand{
+  font-family:'Playfair Display',serif;font-size:1.5rem;
+  font-weight:600;letter-spacing:.1em;color:#3D2C2C;
+  text-decoration:none;transition:all .45s cubic-bezier(.25,.1,.25,1);
+}
+.nav-links{display:flex;gap:2.4rem;list-style:none;align-items:center}
+.nav-links a{
+  text-decoration:none;color:#6B5A5A;font-size:.8rem;
+  letter-spacing:.08em;transition:color .3s;position:relative;
+}
+.nav-links a::after{
+  content:'';position:absolute;bottom:-4px;left:0;width:0;height:1px;
+  background:#C4A3A0;transition:width .3s ease;
+}
+.nav-links a:hover{color:#C4A3A0}
+.nav-links a:hover::after{width:100%}
+.nav-cta{
+  border:1px solid #C4A3A0;color:#C4A3A0!important;
+  padding:.5rem 1.5rem;transition:all .3s ease!important;
+  font-size:.78rem!important;letter-spacing:.08em!important;
+}
+.nav-cta::after{display:none!important}
+.nav-cta:hover{background:#C4A3A0;color:#fff!important}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;z-index:101}
+.hamburger span{width:22px;height:1.5px;background:#3D2C2C;transition:all .3s}
+.hamburger.active span:nth-child(1){transform:rotate(45deg) translate(5px,5px)}
+.hamburger.active span:nth-child(2){opacity:0}
+.hamburger.active span:nth-child(3){transform:rotate(-45deg) translate(4px,-4px)}
+
+/* ===== Hero ===== */
+.hero{
+  min-height:100vh;display:flex;align-items:center;justify-content:center;
+  text-align:center;padding:7rem 2rem 5rem;
+  background:linear-gradient(175deg,#F2E8E6 0%,#FAF7F2 30%,#FAF7F2 70%,#F5EDED 100%);
+  position:relative;overflow:hidden;
+}
+.hero::before{
+  content:'';position:absolute;top:8%;left:5%;width:280px;height:280px;
+  background:radial-gradient(circle,rgba(196,163,160,.1) 0%,transparent 70%);
+  border-radius:50%;animation:float 8s ease-in-out infinite;
+}
+.hero::after{
+  content:'';position:absolute;bottom:15%;right:3%;width:200px;height:200px;
+  background:radial-gradient(circle,rgba(184,147,110,.08) 0%,transparent 70%);
+  border-radius:50%;animation:float 10s ease-in-out 2s infinite;
+}
+@keyframes float{
+  0%,100%{transform:translateY(0) scale(1)}
+  50%{transform:translateY(-20px) scale(1.05)}
+}
+.hero-content{position:relative;z-index:1;max-width:640px}
+.hero-tag{font-size:.72rem;letter-spacing:.28em;color:#B8936E;margin-bottom:2rem;text-transform:uppercase}
+.hero h1{
+  font-family:'Playfair Display','Noto Serif SC',serif;
+  font-size:clamp(2.4rem,6vw,4rem);font-weight:400;line-height:1.3;
+  letter-spacing:.02em;margin-bottom:1.5rem;color:#3D2C2C;
+}
+.hero h1 em{font-style:italic;color:#C4A3A0;font-weight:500}
+.hero-desc{font-size:.95rem;color:#8A7A7A;line-height:2.1;max-width:420px;margin:0 auto 3rem;font-weight:300;letter-spacing:.02em}
+.hero-btns{display:flex;gap:1.2rem;justify-content:center;flex-wrap:wrap}
+.scroll-indicator{
+  position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:.5rem;
+  opacity:.5;animation:bounce 2s ease-in-out infinite;
+}
+.scroll-indicator span{font-size:.65rem;letter-spacing:.15em;color:#B8936E}
+.scroll-indicator .line{width:1px;height:32px;background:linear-gradient(180deg,#C4A3A0,transparent)}
+@keyframes bounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
+
+/* ===== Buttons ===== */
+.btn-primary,.btn-secondary{
+  padding:.95rem 2.5rem;font-size:.8rem;letter-spacing:.1em;
+  cursor:pointer;transition:all .4s cubic-bezier(.25,.1,.25,1);
+  text-decoration:none;display:inline-block;
+  font-family:'Noto Serif SC',serif;
+}
+.btn-primary{background:#C4A3A0;color:#fff;border:none}
+.btn-primary:hover{background:#B08E8B;transform:translateY(-2px);box-shadow:0 12px 32px rgba(180,142,139,.3)}
+.btn-secondary{background:transparent;color:#5C4A4A;border:1px solid rgba(196,163,160,.5)}
+.btn-secondary:hover{background:rgba(196,163,160,.06);border-color:#C4A3A0;transform:translateY(-2px)}
+
+/* ===== Sections ===== */
+section{padding:7rem 2rem;position:relative}
+.section-tag{font-size:.7rem;letter-spacing:.26em;color:#B8936E;text-transform:uppercase;text-align:center;margin-bottom:1rem;font-weight:400}
+.section-title{
+  font-family:'Playfair Display','Noto Serif SC',serif;
+  font-size:clamp(1.6rem,2.8vw,2.2rem);font-weight:400;
+  text-align:center;letter-spacing:.04em;margin-bottom:.8rem;color:#3D2C2C;
+}
+.section-sub{text-align:center;color:#8A7A7A;font-weight:300;max-width:460px;margin:0 auto 4rem;font-size:.85rem;line-height:1.9}
+.section-divider{width:32px;height:1px;background:#D4C5C3;margin:1.5rem auto}
+
+/* Section background alternation */
+.bg-white{background:#fff}
+.bg-soft{background:linear-gradient(180deg,#FAF7F2 0%,#F8F2EE 100%)}
+
+/* ===== Story ===== */
+.story-full{max-width:620px;margin:0 auto;position:relative}
+.story-full > p:first-child::first-letter{
+  font-family:'Playfair Display',serif;
+  font-size:3.8rem;float:left;line-height:.8;
+  padding-right:.6rem;padding-top:.2rem;
+  color:#C4A3A0;font-weight:600;
+}
+.story-full p{font-size:.92rem;color:#5C4A4A;line-height:2.3;font-weight:300;margin-bottom:1.6rem}
+.story-full .highlight{
+  font-family:'Playfair Display','Noto Serif SC',serif;
+  font-size:1.15rem;font-style:italic;color:#C4A3A0;line-height:2.2;
+  text-align:center;margin:3rem 0;padding:2rem 1.5rem;
+  border-top:1px solid #E8DBD8;border-bottom:1px solid #E8DBD8;
+  position:relative;
+}
+.story-full .highlight::before{
+  content:'\201C';font-family:'Playfair Display',serif;
+  font-size:4rem;color:#E8DBD8;position:absolute;
+  top:-1.2rem;left:50%;transform:translateX(-50%);
+  line-height:1;
+}
+.story-signature{text-align:center;margin-top:2.5rem}
+.story-signature p{font-size:.8rem;color:#B8936E;letter-spacing:.08em}
+
+/* ===== Submit ===== */
+.submit-section{background:#fff;position:relative}
+.submit-section::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,#E8DBD8,transparent);
+}
+.submit-card{
+  max-width:640px;margin:0 auto;background:#FAF7F2;
+  padding:3.5rem 3rem;text-align:center;
+  box-shadow:0 1px 0 rgba(61,44,44,.04),0 4px 24px rgba(61,44,44,.03);
+  position:relative;overflow:hidden;
+}
+.submit-card::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,#D4C5C3,#C4A3A0,#D4C5C3);
+}
+.submit-card h3{font-size:1.15rem;font-weight:400;margin-bottom:1rem;color:#3D2C2C;letter-spacing:.06em}
+.submit-card > p{font-size:.82rem;color:#8A7A7A;font-weight:300;line-height:2;margin-bottom:2.5rem}
+.submit-form{text-align:left}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.form-group{margin-bottom:1.3rem}
+.form-group label{display:block;font-size:.75rem;color:#6B5A5A;margin-bottom:.4rem;letter-spacing:.06em;font-weight:400}
+.form-group input,.form-group textarea,.form-group select{
+  width:100%;padding:.8rem 1rem;border:1px solid #E0D5D5;border-radius:0;
+  font-family:'Noto Serif SC',serif;font-size:.82rem;color:#3D2C2C;
+  background:#fff;transition:all .3s;outline:none;
+}
+.form-group input:hover,.form-group textarea:hover,.form-group select:hover{border-color:#D4C5C3}
+.form-group input:focus,.form-group textarea:focus,.form-group select:focus{
+  border-color:#C4A3A0;box-shadow:0 0 0 3px rgba(196,163,160,.08);
+}
+.form-group textarea{height:150px;resize:vertical}
+.form-tip{font-size:.68rem;color:#B8936E;margin-top:.4rem;font-weight:300}
+.submit-form .btn-primary{width:100%;margin-top:.8rem;padding:1rem}
+.form-success{display:none;text-align:center;padding:2.5rem 1rem}
+.form-success .check{
+  width:56px;height:56px;border-radius:50%;
+  background:rgba(196,163,160,.12);display:flex;
+  align-items:center;justify-content:center;
+  margin:0 auto 1.5rem;font-size:1.5rem;
+}
+.form-success p{color:#7A6A6A;font-size:.85rem;line-height:2.2;font-weight:300}
+
+/* ===== Stories Wall ===== */
+.stories-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem;max-width:1000px;margin:0 auto}
+.story-card{background:#fff;padding:2.5rem 2rem;transition:all .5s cubic-bezier(.25,.1,.25,1);position:relative}
+.story-card:hover{transform:translateY(-4px);box-shadow:0 20px 48px rgba(61,44,44,.07)}
+.story-card-header{display:flex;align-items:center;gap:.8rem;margin-bottom:1.2rem}
+.story-card-avatar{
+  width:48px;height:48px;border-radius:50%;
+  background:linear-gradient(135deg,#F5EDED,#E8DBD8);
+  display:flex;align-items:center;justify-content:center;
+  font-size:1.3rem;flex-shrink:0;
+}
+.story-card-dog{font-size:.9rem;font-weight:500;color:#3D2C2C;letter-spacing:.03em}
+.story-card-breed{font-size:.7rem;color:#B8936E;letter-spacing:.04em}
+.story-card p{font-size:.8rem;color:#7A6A6A;line-height:2;font-weight:300}
+.story-card-footer{margin-top:1.2rem;padding-top:1rem;border-top:1px solid #F0E8E6;font-size:.7rem;color:#C4A3A0;letter-spacing:.06em}
+
+/* Story wall empty state */
+.story-placeholder{
+  background:#FBF8F6;
+  display:flex;align-items:center;justify-content:center;
+  text-align:center;min-height:220px;padding:2rem;
+  transition:all .4s ease;
+  position:relative;
+}
+.story-placeholder::after{
+  content:'';position:absolute;inset:8px;
+  border:1px solid rgba(212,197,195,.3);
+  pointer-events:none;
+}
+.story-placeholder:hover{background:#F8F2EE}
+.story-placeholder p{font-size:.8rem;color:#C4A3A0;font-weight:300;line-height:2.2;position:relative;z-index:1}
+.story-placeholder .paw{
+  font-size:1.6rem;display:block;margin-bottom:.8rem;opacity:.5;
+}
+
+/* ===== Footer ===== */
+footer{background:#2D2121;color:#B8A8A8;padding:5rem 2rem 1.5rem}
+.footer-inner{max-width:1000px;margin:0 auto}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr;gap:4rem;margin-bottom:4rem}
+.footer-brand{font-family:'Playfair Display',serif;font-size:1.4rem;letter-spacing:.1em;color:#E8DCD8;margin-bottom:.8rem;font-weight:500}
+.footer-col p{font-size:.78rem;line-height:2;font-weight:300;color:#9A8A8A}
+.footer-col h4{font-size:.7rem;letter-spacing:.14em;color:#C4B0A8;margin-bottom:1rem;text-transform:uppercase;font-weight:400}
+.footer-col a{color:#9A8A8A;text-decoration:none;font-size:.78rem;display:block;margin-bottom:.5rem;transition:color .3s;font-weight:300}
+.footer-col a:hover{color:#E8DCD8}
+.footer-bottom{padding-top:2rem;border-top:1px solid rgba(184,168,168,.1);text-align:center;font-size:.7rem;color:#7A6A6A;letter-spacing:.04em}
+
+/* ===== Animations ===== */
+.fade-in{opacity:0;transform:translateY(40px);transition:all .9s cubic-bezier(.25,.1,.25,1)}
+.fade-in.visible{opacity:1;transform:translateY(0)}
+
+/* ===== Mobile ===== */
+@media(max-width:768px){
+  section{padding:4.5rem 1.2rem}
+  .section-title{font-size:1.4rem}
+  .section-sub{font-size:.8rem;margin-bottom:2.5rem}
+  nav{padding:1rem 1.2rem}nav.scrolled{padding:.6rem 1.2rem}
+  .nav-brand{font-size:1.2rem}nav.scrolled .nav-brand{font-size:1rem}
+  .nav-links{position:fixed;top:0;right:-100%;width:80%;height:100vh;
+    background:#FAF7F2;flex-direction:column;justify-content:center;
+    align-items:center;gap:2.2rem;transition:right .45s ease;}
+  .nav-links a{font-size:.95rem}.nav-links a::after{display:none}
+  .nav-links.active{right:0}.hamburger{display:flex}
+  .hero{padding:5rem 1rem 3rem;min-height:85vh}
+  .hero h1{font-size:1.9rem}.hero-desc{font-size:.85rem}
+  .btn-primary,.btn-secondary{padding:.8rem 1.8rem;font-size:.76rem}
+  .story-full > p:first-child::first-letter{font-size:3rem}
+  .story-full p{font-size:.84rem;line-height:2.1}
+  .story-full .highlight{font-size:1rem;margin:2rem 0;padding:1.5rem 1rem}
+  .stories-grid{grid-template-columns:1fr;max-width:380px}
+  .submit-card{padding:2.5rem 1.2rem}
+  .form-row{grid-template-columns:1fr}
+  .footer-top{grid-template-columns:1fr;gap:2.5rem}
+  .scroll-indicator{display:none}
+}
+@media(max-width:400px){
+  .hero h1{font-size:1.55rem}.hero-desc{font-size:.8rem}
+  .story-full p{font-size:.8rem}
+  .submit-card{padding:2rem 1rem}
+}
+
+/* Scrollbar */
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:#FAF7F2}
+::-webkit-scrollbar-thumb{background:#D4C5C3;border-radius:3px}
+</style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav id="nav">
+  <a href="#" class="nav-brand">Dreamyst</a>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#story">我们的故事</a></li>
+    <li><a href="#submit">投稿</a></li>
+    <li><a href="#wall">故事集</a></li>
+    <li><a href="https://dreamystpet.cn/" target="_blank" rel="noopener">品牌官网</a></li>
+    <li><a href="#submit" class="nav-cta">分享故事</a></li>
+  </ul>
+  <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+</nav>
+
+<!-- Hero -->
+<section class="hero" id="home">
+  <div class="hero-content fade-in">
+    <p class="hero-tag">Dreamyst Stories</p>
+    <h1>每一只小狗<br><em>都值得被记住</em></h1>
+    <p class="hero-desc">这里不卖裙子。这里只存放那些被认真对待的、毛茸茸的、小小的生命。</p>
+    <div class="hero-btns">
+      <a href="#story" class="btn-primary">读我们的故事</a>
+      <a href="#submit" class="btn-secondary">分享你的故事</a>
+    </div>
+  </div>
+  <div class="scroll-indicator">
+    <span>向下阅读</span>
+    <div class="line"></div>
+  </div>
+</section>
+
+<!-- Our Story -->
+<section id="story">
+  <p class="section-tag">01 &mdash; Notre Histoire</p>
+  <h2 class="section-title">Dreamyst 是怎样开始的</h2>
+  <div class="section-divider"></div>
+
+  <div class="story-full fade-in">
+
+    <p>小D做女装，做了十年。</p>
+    <p>十年。不是那种"从小有个设计师梦想"的叙事——没有。她就是喜欢摸面料。大学毕业进了服装公司，做版师助理，后来自己出来做独立设计。工作室不大，在城西一栋旧楼里，窗户朝西，下午的光把整面墙切成两半——一半金色，一半阴影。她每天坐在那道光的边界上，缝东西。</p>
+    <p>十年里她做了很多件衣服。有的被人买走，穿上重要的场合。有的做出来没人要，挂在架子上落灰，过季之后她自己拆了，面料留下来，等着下一次。她习惯了。做衣服这件事，本来就不是每件都会被人看见。</p>
+    <p>但她有一个习惯——每件做完之后，都会翻过来。翻过来看接缝。看锁边。看里面和外面是不是一样干净。这个习惯，圈内的朋友说她是"职业病"。她也不反驳。但她心里知道——这不是职业病。这是她信的东西。</p>
+
+    <div class="highlight">一件衣服，外面是给别人看的。<br>里面，是你自己知道它是什么样的。<br>你敢不敢翻过来？</div>
+
+    <p>那天下午，朋友阿宁带着马尔济斯来工作室。小狗叫椰奶，一岁多，白色的毛有点炸，进门就满地巡逻。沙发下面、面料堆后面、缝纫机底下——每个角落都检查了一遍，最后在窗边找了一小块被太阳晒暖的地板，趴下来，把下巴搁在前爪上，叹了口气。那个叹气，让阿宁笑了。"跟个人似的。"</p>
+    <p>小D也笑了。但她注意到另外一件事。椰奶穿着一件蕾丝裙。白色的。远看还行——就是那种你在淘宝上刷到的"网红狗狗蕾丝裙"，滤镜一套，氛围感到位，你觉得"这个可以"。但椰奶一直在蹭。趴下去，蹭一下脖子。站起来，蹭一下腋下。走了两步，后腿抬起来挠后背。循环了好几次。</p>
+    <p>阿宁注意到她在看。"你也觉得不太对劲是吧。""它穿多久了？""买了两周。每次穿都这样。刚开始我以为它是不习惯穿衣服——之前没给它穿过。但两周了还是这样，每次穿上去就开始蹭，脱了就好。"阿宁蹲下来，想把椰奶抱起来看看。手伸过去的时候——小狗往旁边躲了。不是躲人。是躲那只伸向它后背的手。</p>
+    <p>小D心里动了一下。她太熟悉这个动作了。一个女人，穿了一双不合脚的鞋，走了一天，回家第一件事就是蹬掉它。那是一种解脱的表情。椰奶躲的不是阿宁，是那条裙子。</p>
+
+    <p>"你过来。"小D把椰奶轻轻抱到工作台上。小狗站得很乖，尾巴夹在两腿之间。她摸着它的头，手指在耳后慢慢揉了两圈，等它放松。然后她翻开裙子的内里。</p>
+    <p>她看到的第一眼——说不上愤怒。也不是失望。是一种更安静的东西。一种"果然如此"。锁边是拷边机直接车的。线迹粗，没有包边，硬茬子朝外支棱着。在人的衣服上，这种做法叫"够用"——一件几十块的T恤就是这个锁法。但人的皮肤没那么敏感，而且人穿着内衣。狗不一样。狗的皮肤比人薄，神经末梢更密，腋下和肚子是全身最敏感的地方。粗锁边来回摩擦，就像你穿了一件毛衣，里面所有的毛茬都扎在皮肤上。一整天。你没有办法脱，你只能蹭。</p>
+    <p>她用手指顺着锁边走了一遍。那个手感，她闭着眼睛都能认出来。不是棉线。是涤纶。最便宜的那种，洗两水就起球，越洗越硬。一条狗的一生大概十几年——这件裙子在它身上穿的每一天，都会比前一天更难熬。</p>
+    <p>然后她摸了一下面料。那一刻她真的愣了一下。远看是蕾丝。手摸上去就知道了——不是。是聚酯纤维仿的蕾丝花纹。硬，扎手，没有垂坠感。真正的蕾丝是活的。拿在手里会顺着你的手指往下坠，在光下面花纹会透出深浅。这个没有。它直挺挺地支棱着，像一片塑料——狗趴下来的时候，裙摆不会跟着身体弯，而是翘起来，硌在肚子和地板之间。</p>
+    <p>"你多少钱买的？""一百多。算贵的了。便宜的十几块的也有，更没法看。"一百多。小D低头看着手指下面的蕾丝——或者所谓"蕾丝"。一百多，在人穿的衣服里，连一件像样的纯棉T恤都买不到。但因为是"给狗穿的"——一百多，已经叫"贵的了"。这个世界觉得，给狗的东西，不用那么好。她没有说出来。但她脑子里闪过了一句话：凭什么？</p>
+    <p>阿宁说："我搜了好久。小型犬蕾丝裙，翻了几十页。贵的便宜的我都试了。好看的穿上去不舒服，舒服的又不好看。找不到一条两样都占的。"她说这句话的时候语气很平常——就是那种"喏，就是买不到嘛"的无奈。一个女性消费者，在一个她觉得理所当然应该有得选的东西上——没有选择。她已经习惯了。小D没接话。</p>
+    <p>她把椰奶的裙子脱了。那条裙子被她放在工作台的角落——挨着一块还没裁的法国蕾丝。那块蕾丝是她的存货。象牙白，花型是手绘的小雏菊，上次去巴黎面料展的时候收的。特别喜欢，但一直没舍得用——不知道用来做什么，只是放在柜子里，偶尔拿出来摸一下。偶尔她会想：我为什么要买一块不知道做什么用的蕾丝？然后又放回去。</p>
+    <p>椰奶光着身子趴在工作台上，耳朵终于能自然垂下来了。它的毛在太阳底下看起来是半透明的，边缘有一圈很细的金光。小D看着它，脑子里出现了一个画面——那条真正的蕾丝，垂在它身上，软的，透气的，动的时候裙摆轻轻晃。她拿起桌上的软尺。</p>
+
+    <p>阿宁走的时候给她量好了椰奶的尺寸。颈围18，胸围32，背长24。这些数字放在女装尺码表里，最接近的是三个月婴儿的尺寸。但三个月大的婴儿不用趴在地上。不用打滚。不用抬腿挠痒。</p>
+
+    <p>那天晚上，小D一个人。工作室的窗户外面，城市一层一层地暗下去。对面楼里有一户人家亮着灯，黄色的，温温的。她看了两眼，又低下头。她把那块法国蕾丝铺开。手里的剪刀很凉。第一刀下去的时候，她停了一秒——不是犹豫。是跟过去十年里每一次下剪刀的感觉一样：这一刀下去，就没有回头路了。裁坏了，一块好面料就废了。所以每一次都得是对的。</p>
+    <p>她做了六片式拼接。不是常见的两片——两片的版型太简单，穿在小型犬身上，肩膀那里会空一块，腋下会堆褶皱。六片才能贴合胸腔的弧度。就像给人做高定——三片式比两片式贴，六片式比三片式更贴。每一片弧度都不一样，前胸两片要收一点省，给肩膀让出活动的余地。后背那一块要多留两毫米放量——趴下来的时候背会拱起来，不留余量会勒。</p>
+    <p>内衬用的是全棉。不是普通的棉——是有机棉，手感比她自己穿的T恤还要软。贴着皮肤的时候，是"滑过去"的感觉，不是"蹭过去"。锁边做的是法式来去缝。做女装的人都知道，来去缝是最笨的办法。两片面料反面相对车一道，翻过来再车一道——等于每一条接缝都要走两遍线。工厂最讨厌这种做法，因为慢。但做出来之后，没有任何毛边裸露在外面。整件衣服翻过来，接缝整整齐齐干干净净像被藏在衣服里面的一朵小花。</p>
+
+    <div class="highlight">一件衣服敢不敢翻过来。<br>她把裙子翻过来。六条接缝，整整齐齐。<br>没有一根线头。没有一寸毛边。<br>不是"够用"，不是"差不多"。<br>是——干净。</div>
+
+    <p>扣子做了三颗，手工包的珍珠扣。不是魔术贴，不是拉链，不是那种一拽就开的暗扣。她缝扣眼的时候量了五次——扣眼太小了扣子塞不进去，太大了走路自己会开。最后找到的那个尺寸，不到一毫米的差别。手才能做到。</p>
+    <p>外面的天亮起来了。她没注意。她缝完最后一颗扣子，剪断线头，把裙子举到窗口。晨光从蕾丝的花纹间漏下来，落在地上——像碎了一地的小雏菊。她拍了张照片，发给阿宁。"明天来拿。"</p>
+
+    <p>阿宁是下午来的。她把椰奶放在工作室的地板上。小D把裙子给它穿上。椰奶站着，没有蹭。没有抬腿。没有扭脖子。它低头闻了闻裙摆——闻了两三秒——然后抬头看阿宁。尾巴晃了一下。很轻。只是尾巴尖动了。</p>
+    <p>"你让它走走。"椰奶在工作室里走了一圈。步伐跟平时一模一样。背还是平的，步幅还是那个长度。走到窗边，趴下来——这次裙摆没有翘起来。蕾丝跟着它的身体一起弯下去，软软地铺在地板上，像一圈轻轻地落在它身上的花瓣。</p>
+    <p>阿宁蹲下来，翻开裙子里面看。她看不出什么来去缝——她不是做衣服的。但她看懂了一件事。"它不蹭了。"小D靠在缝纫机上，手里端着那个搪瓷缸。咖啡是早上的，已经凉了。她喝了一口，放下。好一会儿才说话。"因为它不痒。"</p>
+    <p>阿宁看着她。"你知道吗，我找了半年。三个月换过六条裙子。最后居然是你做的这条——"她没说下去。但小D听懂了。</p>
+    <p>她想起自己大学刚毕业的时候，买不起好东西，去批发市场一件一件地挑T恤。翻过来看锁边，翻过去看标签。站在试衣间里，试了五六件，最后走的时候一件也没买。店员的眼神她到现在还记得——"你又不买试那么多干嘛"。这跟钱没关系。跟你愿不愿意凑合有关系。</p>
+
+    <p>那天晚上，阿宁在小红书上发了一张椰奶的图。配了很长的文字。结尾那句是："终于有一条裙子，是它愿意穿的了。"底下评论越来越多。很多养小型犬的女孩子：我家也这样！买了穿一次就闲置了！有没有链接？能不能做？小D一条都没回。她正在改第二版的版型——因为另一个朋友说，她家的狗胸比椰奶小一点，同样的裙子穿上去腋下有点空。她调整了放量的公式。不是所有狗都是同一个身材。同一品种也会差。她把颈围、胸围、背长做了一个对应的尺码梯度，每两厘米一个档。每调整一次，就得把所有版型重新画一遍。</p>
+    <p>她工作室的门上，后来贴了一张手写的小纸条："Dreamyst —— 一个给小狗做衣服的地方。"Dreamy。她喜欢这个词。不是"梦幻"的意思——是"值得被认真对待"。她做了十年女装，太清楚"好看"跟"好穿"之间的距离。那条裙子，是椰奶的——但也是她自己的。是一个做了十年女装的女的，终于没有对"够用"说好。</p>
+    <p>后来有人问过她：做了十年女装，突然开始做宠物衣服，不觉得"降级"吗。她想了一下。"其实是一样的。给我做衣服的每一个姑娘，我都希望她们穿上之后——不用分心去想'领口是不是有点勒''腋下是不是不舒服'。不用在重要场合分出一部分精力来处理衣服带来的不舒服。她们只需要做自己。""狗也是。""它只是说不出来。"她低头，手指从一件新做的样衣接缝上滑过去。"我替它说。"</p>
+    <p>椰奶现在还穿着那条裙子。穿了快一年了，洗了很多次——蕾丝没有硬，内衬没有起球。裙摆的小雏菊花纹淡了一点点，在光下面还是能看出来。它还是喜欢趴在窗边那块被太阳晒暖的地板上。穿裙子的时候，它趴下来——裙摆跟着它一起弯，像一道很轻很轻的呼吸。</p>
+
+    <div class="highlight">Dreamyst。<br>一件可以翻过来的裙子。<br>给每一个——值得被认真对待的，小小的她。</div>
+
+    <div class="story-signature">
+      <p>—— Dreamyst 创始人 小D</p>
+    </div>
+  </div>
+</section>
+
+<!-- Submit -->
+<section class="submit-section" id="submit">
+  <p class="section-tag">02 &mdash; Partagez Votre Histoire</p>
+  <h2 class="section-title">分享你与它的故事</h2>
+  <p class="section-sub">每只小狗都有属于自己的故事。写下来，让它被更多人记住。</p>
+
+  <div class="submit-card fade-in">
+    <h3>投稿到 Dreamyst</h3>
+    <p>告诉我们你的小狗叫什么、是什么品种、你们之间有什么特别的故事。</p>
+    <form class="submit-form" id="storyForm" action="https://formspree.io/f/mykayddy" method="POST">
+      <div class="form-row">
+        <div class="form-group">
+          <label for="name">你的称呼</label>
+          <input type="text" id="name" name="name" placeholder="怎么称呼你？" required>
+        </div>
+        <div class="form-group">
+          <label for="dogname">小狗的名字</label>
+          <input type="text" id="dogname" name="dogname" placeholder="它叫什么？" required>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="breed">它的品种</label>
+          <select id="breed" name="breed">
+            <option value="">请选择（选填）</option>
+            <option>马尔济斯</option><option>西施</option><option>约克夏</option>
+            <option>泰迪</option><option>博美</option><option>比熊</option>
+            <option>吉娃娃</option><option>其他小型犬</option><option>其他</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="contact">你的联系方式</label>
+          <input type="text" id="contact" name="contact" placeholder="微信 / 邮箱（选填）">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="story-text">你们的故事</label>
+        <textarea id="story-text" name="story" placeholder="写下来吧——你们是怎么遇见的、它有什么小习惯、你记得最深的那个瞬间……" required></textarea>
+        <p class="form-tip">写多长都可以。好的故事，我们会在故事集里展示。</p>
+      </div>
+      <input type="hidden" name="_subject" value="Dreamyst 故事投稿">
+      <button type="submit" class="btn-primary">投递这个故事</button>
+    </form>
+    <div class="form-success" id="formSuccess">
+      <div class="check">✦</div>
+      <p>故事收到了。<br>每一只小狗都值得被记住。<br>谢谢你。</p>
+    </div>
+  </div>
+</section>
+
+<!-- Stories Wall -->
+<section id="wall">
+  <p class="section-tag">03 &mdash; Le Mur des Histoires</p>
+  <h2 class="section-title">故事集</h2>
+  <p class="section-sub">这里将陆续放上来自你们的、真实的小狗故事。</p>
+
+  <div class="stories-grid fade-in">
+    <div class="story-placeholder">
+      <div><span class="paw">🐾</span><p>等待第一个故事</p></div>
+    </div>
+    <div class="story-placeholder">
+      <div><span class="paw">✉️</span><p>你的小狗叫什么？<br>它有什么故事？</p></div>
+    </div>
+    <div class="story-placeholder">
+      <div><span class="paw">✨</span><p>这里的位置<br>留给你的小狗</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-col">
+        <div class="footer-brand">Dreamyst</div>
+        <p>一个给小狗做衣服的地方。<br>也是一个存放小狗故事的地方。</p>
+      </div>
+      <div class="footer-col">
+        <h4>浏览</h4>
+        <a href="#story">我们的故事</a>
+        <a href="#submit">投稿</a>
+        <a href="#wall">故事集</a>
+      </div>
+      <div class="footer-col">
+        <h4>链接</h4>
+        <a href="https://dreamystpet.cn/" target="_blank" rel="noopener">品牌官网</a>
+        <a href="#">小红书 @Dreamystpet</a>
+        <a href="mailto:Dreamystpet@outlook.com">Dreamystpet@outlook.com</a>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 Dreamyst. Tous droits réservés.</div>
+  </div>
+</footer>
+
+<script>
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>{nav.classList.toggle('scrolled',window.scrollY>60)});
+const hamburger=document.getElementById('hamburger');
+const navLinks=document.getElementById('navLinks');
+hamburger.addEventListener('click',()=>{
+  hamburger.classList.toggle('active');navLinks.classList.toggle('active');
+});
+navLinks.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{
+  hamburger.classList.remove('active');navLinks.classList.remove('active');
+}));
+const observer=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');observer.unobserve(e.target)}});
+},{threshold:0.1});
+document.querySelectorAll('.fade-in').forEach(el=>observer.observe(el));
+const storyForm=document.getElementById('storyForm');
+if(storyForm){
+  storyForm.addEventListener('submit',async(e)=>{
+    e.preventDefault();const btn=storyForm.querySelector('button');
+    btn.textContent='投递中...';btn.disabled=true;
+    try{
+      const res=await fetch(storyForm.action,{
+        method:'POST',body:new FormData(storyForm),
+        headers:{'Accept':'application/json'}
+      });
+      if(res.ok){storyForm.style.display='none';document.getElementById('formSuccess').style.display='block'}
+      else throw new Error('form error');
+    }catch(err){alert('投递失败，请直接发送到 Dreamystpet@outlook.com');}
+    btn.textContent='投递这个故事';btn.disabled=false;
+  });
+}
+</script>
+</body>
+</html>
