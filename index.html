@@ -112,6 +112,22 @@ footer{background:#1F1A1A;color:#999090;padding:5rem 2rem 1.5rem}
 .soc-circle:hover span{color:#C4B8B8}
 .footer-bottom{padding-top:2rem;border-top:1px solid rgba(255,255,255,.06);text-align:center;font-size:.7rem;color:#666060;letter-spacing:.04em}
 
+.testimonials-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;max-width:1000px;margin:0 auto}
+.testimonial-card{padding:2.5rem 1.8rem;text-align:center;position:relative;overflow:hidden;transition:all .4s ease}
+.testimonial-card:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(61,44,44,.06)}
+.testimonial-card::before{content:'';position:absolute;inset:0;z-index:0}
+.testimonial-card>*{position:relative;z-index:1}
+.t-card-1{background:linear-gradient(160deg,#F5EDED 0%,#FBF8F6 50%,#F2E8E6 100%)}
+.t-card-1::before{background:radial-gradient(circle at 20% 80%,rgba(196,163,160,.08) 0%,transparent 60%)}
+.t-card-2{background:linear-gradient(160deg,#F0E8E6 0%,#FAF7F2 50%,#F5EDED 100%)}
+.t-card-2::before{background:radial-gradient(circle at 80% 30%,rgba(196,163,160,.08) 0%,transparent 60%)}
+.t-card-3{background:linear-gradient(160deg,#F8F2EE 0%,#F5EDED 50%,#FAF7F2 100%)}
+.t-card-3::before{background:radial-gradient(circle at 50% 60%,rgba(196,163,160,.06) 0%,transparent 60%)}
+.testimonial-stars{color:#C4A3A0;font-size:.85rem;letter-spacing:.15em;margin-bottom:.8rem}
+.testimonial-quote{font-size:.85rem;color:#5C4A4A;line-height:2;font-weight:300;margin-bottom:1.2rem;font-style:italic}
+.testimonial-quote::before{content:'"';font-family:'Playfair Display',serif;font-size:2rem;color:#D4C5C3;display:block;margin-bottom:.4rem}
+.testimonial-author{font-size:.75rem;color:#B8936E;letter-spacing:.04em}
+
 .fade-in{opacity:0;transform:translateY(40px);transition:all .9s cubic-bezier(.25,.1,.25,1)}
 .fade-in.visible{opacity:1;transform:translateY(0)}
 
@@ -129,6 +145,9 @@ footer{background:#1F1A1A;color:#999090;padding:5rem 2rem 1.5rem}
   .story-full p{font-size:.84rem;line-height:2.1}
   .story-full .highlight{font-size:1rem;margin:2rem 0;padding:1.5rem 1rem}
   .stories-grid{grid-template-columns:1fr;max-width:380px}
+  .testimonials-grid{grid-template-columns:1fr;max-width:360px;margin:0 auto}
+  .testimonial-card{padding:2rem 1.5rem}
+  .testimonial-quote{font-size:.78rem}
   .submit-card{padding:2.5rem 1.2rem}.form-row{grid-template-columns:1fr}
   .footer-top{grid-template-columns:1fr;gap:2rem}
   .scroll-indicator{display:none}
@@ -209,6 +228,30 @@ footer{background:#1F1A1A;color:#999090;padding:5rem 2rem 1.5rem}
       <button type="submit" class="btn-primary">投递这个故事</button>
     </form>
     <div class="form-success" id="formSuccess"><div class="check">✦</div><p>故事收到了。<br>每一只小狗都值得被记住。<br>谢谢你。</p></div>
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section>
+  <p class="section-tag">Elles ont essayé</p>
+  <h2 class="section-title">来自已经穿上它们的小公主</h2>
+  <div class="section-divider"></div>
+  <div class="testimonials-grid">
+    <div class="testimonial-card t-card-1 fade-in">
+      <div class="testimonial-stars">★★★★★</div>
+      <p class="testimonial-quote">第一次买到不勒腋下的宠物裙。我家西施穿上跑了半小时都没歪，裙摆跟着她转起来的样子太美了。</p>
+      <p class="testimonial-author">@棉花糖是西施</p>
+    </div>
+    <div class="testimonial-card t-card-2 fade-in">
+      <div class="testimonial-stars">★★★★★</div>
+      <p class="testimonial-quote">拆开盒子那一刻就感动了。裙子用薄纸包着，系了一根丝带，像拆一件给自己的礼物。我家约克夏穿上珠片裙在小区回头率百分百。</p>
+      <p class="testimonial-author">@Milo的衣帽间</p>
+    </div>
+    <div class="testimonial-card t-card-3 fade-in">
+      <div class="testimonial-stars">★★★★★</div>
+      <p class="testimonial-quote">之前买过很多宠物蕾丝裙，内里直接锁边，扎手。Dreamystpet的内衬是棉的，我终于敢让我家马尔济斯穿一整天。</p>
+      <p class="testimonial-author">@团团今天穿什么</p>
+    </div>
   </div>
 </section>
 
